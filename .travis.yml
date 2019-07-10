@@ -13,10 +13,10 @@ notifications:
 env:
   global:
     - ROS_DISTRO=melodic
-    - UPSTREAM_WORKSPACE=https://raw.githubusercontent.com/ros-planning/moveit/$ROS_DISTRO-devel/moveit.rosinstall
+    - UPSTREAM_WORKSPACE=moveit_example_apps.rosinstall,https://raw.githubusercontent.com/ros-planning/moveit/$ROS_DISTRO-devel/moveit.rosinstall
   matrix:
     - DOCKER_IMAGE=moveit/moveit:master-source   TEST=clang-format,catkin_lint
-    - DOCKER_IMAGE=moveit/moveit:master-source
+    - DOCKER_IMAGE=moveit/moveit:master-source   BEFORE_SCRIPT="source ./moveit_example_apps/random_pick_depends.sh" 
 
 before_script:
   - git clone -q --depth=1 https://github.com/ros-planning/moveit_ci.git .moveit_ci
