@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup UR5 With MoveIt &mdash; MoveIt App Tutorials 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="MoveIt App Tutorials 0.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Random Pick (OpenVINO Grasp Detection)" href="random_pick.html"/>
+        <link rel="next" title="Bring up fake controller, real controller and gripper controller" href="launch_robots.html"/>
+        <link rel="prev" title="GPD Setup" href="gpd_setup.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MoveIt App Tutorials
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../template.html">[App Tutorial Template]</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="random_pick.html">Random Pick (OpenVINO Grasp Detection)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#requirement">Requirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#download-and-build-the-application">Download and Build the Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#launch-the-application-with-fake-control-and-recorded-pointcloud">Launch the Application with Fake Control and Recorded PointCloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#launch-the-application-with-real-robot-and-camera">Launch the Application with Real Robot and Camera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#customization-notes">Customization Notes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="random_pick.html#troubles-shooting">Troubles Shooting</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gpd_setup.html">GPD Setup</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Setup UR5 With MoveIt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#system-requirement">System Requirement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#verify-setup">Verify Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="launch_robots.html">Bring up fake controller, real controller and gripper controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform_fence_customization.html">How to Change the Size of the Platform and Fences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">MoveIt App Tutorials</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="random_pick.html">Random Pick (OpenVINO Grasp Detection)</a> &raquo;</li>
+      
+    <li>Setup UR5 With MoveIt</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/doc/random_pick/ur5_setup_with_moveit.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup-ur5-with-moveit">
+<h1>Setup UR5 With MoveIt<a class="headerlink" href="#setup-ur5-with-moveit" title="Permalink to this headline">¶</a></h1>
+<p>This section contains the instructions to install the dependencies
+that are required to make UR5 robot run in simulation and real execution with MoveIt.</p>
+<div class="section" id="system-requirement">
+<h2>System Requirement<a class="headerlink" href="#system-requirement" title="Permalink to this headline">¶</a></h2>
+<p>Ubuntu Linux 18.04 on 64-bit</p>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Install <a class="reference external" href="http://wiki.ros.org/melodic/Installation/Ubuntu">ROS Melodic</a>.</p>
+<p>Install <a class="reference external" href="https://moveit.ros.org/install/source/">MoveIt</a>.</p>
+<p>Install <a class="reference external" href="http://wiki.ros.org/ros_control">ros_control</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo apt install ros-melodic-ros-control ros-melodic-ros-controllers
+</pre></div>
+</div>
+<p>Download and install <a class="reference external" href="http://wiki.ros.org/Industrial">ROS-Industrial</a>, <a class="reference external" href="http://wiki.ros.org/universal_robot">universal_robot</a> and  <a class="reference external" href="https://github.com/ros-industrial/ur_modern_driver/tree/kinetic-devel">ur_modern_driver</a>.
+<a class="reference external" href="http://wiki.ros.org/universal_robot">universal_robot</a> contains the urdf files, communication message format and kinematics plugins of UR robots.
+<a class="reference external" href="https://github.com/ros-industrial/ur_modern_driver/tree/kinetic-devel">ur_modern_driver</a> is the UR robot ROS driver, which is in charge of publishing robot state,
+sending the MoveIt generated joint trajectory message to the robot factory controller.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> &lt;catkin_workspace&gt;/src
+
+<span class="c1"># ROS-Industrial</span>
+git clone -b kinetic-devel https://github.com/ros-industrial/industrial_core.git
+
+<span class="c1"># universal_robot</span>
+git clone -b kinetic-devel https://github.com/ros-industrial/universal_robot.git
+
+<span class="c1"># ur_modern_driver</span>
+git clone -b kinetic-devel https://github.com/ros-industrial/ur_modern_driver.git
+
+<span class="nb">cd</span> .. <span class="o">&amp;&amp;</span> catkin build
+</pre></div>
+</div>
+</div>
+<div class="section" id="verify-setup">
+<h2>Verify Setup<a class="headerlink" href="#verify-setup" title="Permalink to this headline">¶</a></h2>
+<p>You can verify the UR5 setup by running:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c1"># terminal 1</span>
+roslaunch ur_description ur5_upload.launch
+
+<span class="c1"># terminal 2</span>
+roslaunch ur_description test.launch
+</pre></div>
+</div>
+<p>at the left <code class="docutils literal"><span class="pre">Displays</span></code> panel of Rviz, change the <code class="docutils literal"><span class="pre">fixed</span> <span class="pre">frame</span></code> to &#8220;base_link&#8221;, and add <code class="docutils literal"><span class="pre">RobotModel</span></code> and <code class="docutils literal"><span class="pre">TF</span></code>,
+then you can see UR5 brought up in Rviz.</p>
+<p>If you would like to see UR5 brought up in Gazebo, run:</p>
+<div class="highlight-bash"><div class="highlight"><pre>roslaunch ur_gazebo ur5.launch
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="launch_robots.html" class="btn btn-neutral float-right" title="Bring up fake controller, real controller and gripper controller" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gpd_setup.html" class="btn btn-neutral" title="GPD Setup" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MoveIt.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

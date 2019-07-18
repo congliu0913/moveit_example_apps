@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to Change the Size of the Platform and Fences &mdash; MoveIt App Tutorials 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="MoveIt App Tutorials 0.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Random Pick (OpenVINO Grasp Detection)" href="random_pick.html"/>
+        <link rel="prev" title="Bring up fake controller, real controller and gripper controller" href="launch_robots.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MoveIt App Tutorials
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../template.html">[App Tutorial Template]</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="random_pick.html">Random Pick (OpenVINO Grasp Detection)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#requirement">Requirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#download-and-build-the-application">Download and Build the Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#launch-the-application-with-fake-control-and-recorded-pointcloud">Launch the Application with Fake Control and Recorded PointCloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#launch-the-application-with-real-robot-and-camera">Launch the Application with Real Robot and Camera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_pick.html#customization-notes">Customization Notes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="random_pick.html#troubles-shooting">Troubles Shooting</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gpd_setup.html">GPD Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ur5_setup_with_moveit.html">Setup UR5 With MoveIt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch_robots.html">Bring up fake controller, real controller and gripper controller</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">How to Change the Size of the Platform and Fences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">MoveIt App Tutorials</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="random_pick.html">Random Pick (OpenVINO Grasp Detection)</a> &raquo;</li>
+      
+    <li>How to Change the Size of the Platform and Fences</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/doc/random_pick/platform_fence_customization.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-change-the-size-of-the-platform-and-fences">
+<h1>How to Change the Size of the Platform and Fences<a class="headerlink" href="#how-to-change-the-size-of-the-platform-and-fences" title="Permalink to this headline">¶</a></h1>
+<p>The design of the ilc_platform combined with fences are
+in <code class="docutils literal"><span class="pre">examples/random_pick/random_pick/urdf/ilc_platform/ilc_platform.urdf.xacro</span></code>.</p>
+<p>You can explore the details of the design in Rviz by running:</p>
+<div class="highlight-bash"><div class="highlight"><pre>roslaunch random_pick visualize_ilc_platform.launch
+</pre></div>
+</div>
+<img alt="../../_images/ilc_platform.png" src="../../_images/ilc_platform.png" />
+<p>The ilc_platform and fences are integrated with the UR5 robot
+in <code class="docutils literal"><span class="pre">examples/random_pick/random_pick/urdf/ur5_plus/ur5_hitbot_ilc_platform.urdf.xacro</span></code>.</p>
+<p>You can change the size of the ilc_platform and fences in the following lines:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- platform --&gt;</span>
+<span class="nt">&lt;xacro:include</span> <span class="na">filename=</span><span class="s">&quot;$(find random_pick)/urdf/ilc_platform/ilc_platform.urdf.xacro&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;xacro:platform</span> <span class="na">platform_height=</span><span class="s">&quot;0.32&quot;</span>
+                <span class="na">platform_width=</span><span class="s">&quot;0.7&quot;</span>
+                <span class="na">platform_length=</span><span class="s">&quot;0.98&quot;</span>
+                <span class="na">connected_to=</span><span class="s">&quot;world&quot;</span>
+                <span class="na">xyz=</span><span class="s">&quot;0 0 0&quot;</span>
+                <span class="na">rpy=</span><span class="s">&quot;0 0 0&quot;</span>
+                <span class="na">up_beam=</span><span class="s">&quot;false&quot;</span>
+                <span class="na">fence_left_dist=</span><span class="s">&quot;0.5&quot;</span>
+                <span class="na">fence_right_dist=</span><span class="s">&quot;1.0&quot;</span>
+                <span class="na">fence_front_dist=</span><span class="s">&quot;0.8&quot;</span>
+                <span class="na">fence_back_dist=</span><span class="s">&quot;0.6&quot;</span>
+                <span class="na">fence_top_height=</span><span class="s">&quot;1.75&quot;</span>
+                <span class="na">fence_transparent=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>If you change the values in the above lines in the two files,
+you can immediately see the result by running:</p>
+<div class="highlight-bash"><div class="highlight"><pre>roslaunch random_pick visualize_ur5.launch
+</pre></div>
+</div>
+<p>At the same time, the table and fences will also be changed
+in the MoveIt scene.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="launch_robots.html" class="btn btn-neutral" title="Bring up fake controller, real controller and gripper controller" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MoveIt.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

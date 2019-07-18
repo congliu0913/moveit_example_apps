@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Random Pick (OpenVINO Grasp Detection) &mdash; MoveIt App Tutorials 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="MoveIt App Tutorials 0.1.0 documentation" href="../../index.html"/>
+        <link rel="next" title="GPD Setup" href="gpd_setup.html"/>
+        <link rel="prev" title="[App Tutorial Template]" href="../template.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MoveIt App Tutorials
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../template.html">[App Tutorial Template]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Random Pick (OpenVINO Grasp Detection)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirement">Requirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-and-build-the-application">Download and Build the Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-the-application-with-fake-control-and-recorded-pointcloud">Launch the Application with Fake Control and Recorded PointCloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-the-application-with-real-robot-and-camera">Launch the Application with Real Robot and Camera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#customization-notes">Customization Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubles-shooting">Troubles Shooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gpd_setup.html">GPD Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ur5_setup_with_moveit.html">Setup UR5 With MoveIt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch_robots.html">Bring up fake controller, real controller and gripper controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform_fence_customization.html">How to Change the Size of the Platform and Fences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">MoveIt App Tutorials</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>Random Pick (OpenVINO Grasp Detection)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/doc/random_pick/random_pick.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="random-pick-openvino-grasp-detection">
+<h1>Random Pick (OpenVINO Grasp Detection)<a class="headerlink" href="#random-pick-openvino-grasp-detection" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A simple application demonstrating how to pick up objects from clutter scenarios with an industrial robot arm.
+The application takes grasp detection results from <a class="reference external" href="https://github.com/atenpas/gpd/blob/master/tutorials/tutorial_openvino.md">OpenVINO GPD</a>,
+transforms the grasp pose from camera view
+to the robot view with the <a class="reference external" href="https://github.com/crigroup/handeye">Hand-Eye Calibration</a>,
+translates the <a class="reference external" href="https://github.com/atenpas/gpd/blob/master/msg/GraspConfig.msg">Grasp Pose</a> into <a class="reference external" href="http://docs.ros.org/api/moveit_msgs/html/msg/Grasp.html">moveit_msgs Grasp</a>,
+and uses the <a class="reference external" href="https://ros-planning.github.io/moveit_tutorials/doc/pick_place/pick_place_tutorial.html">MoveGroupInterface</a> to pick and place the object.
+Watch this <a class="reference external" href="https://www.youtube.com/embed/b4EPvHdidOA?rel=0">demo_video</a> to see the output of this application.</p>
+<iframe width="700px" height="394px" src="https://www.youtube.com/embed/b4EPvHdidOA?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+<div class="section" id="requirement">
+<h2>Requirement<a class="headerlink" href="#requirement" title="Permalink to this headline">¶</a></h2>
+<p>Before running the code, make sure you have followed the instructions below
+to setup the robot to work with MoveIt
+The setup includes installing necessary robot URDF files,
+the MoveIt configures and SRDF files, and ROS driver for the robot control.</p>
+<ul class="simple">
+<li>Hardware<ul>
+<li>Host running ROS2/ROS</li>
+<li>RGBD sensor</li>
+<li><a class="reference external" href="https://www.universal-robots.com/products/ur5-robot">Robot Arm</a> (optional)</li>
+<li><a class="reference external" href="https://www.universal-robots.com/plus/end-effectors/hitbot-electric-gripper">Robot Gripper</a> (optional)</li>
+</ul>
+</li>
+<li>Software<ul>
+<li><a class="reference external" href="http://wiki.ros.org/melodic/Installation/Ubuntu">ROS Melodic</a> Desktop-Full</li>
+<li><a class="reference external" href="https://ros-planning.github.io/moveit_tutorials/doc/getting_started/getting_started.html#install-moveit">MoveIt</a></li>
+<li>Universal Robot<ul>
+<li><a class="reference internal" href="ur5_setup_with_moveit.html"><em>Setup UR5 with MoveIt</em></a></li>
+</ul>
+</li>
+<li>Robot Gripper<ul>
+<li><a class="reference external" href="https://www.universal-robots.com/plus/end-effectors/hitbot-electric-gripper">hitbot</a></li>
+</ul>
+</li>
+<li>RGBD Sensor<ul>
+<li><a class="reference external" href="https://github.com/intel-ros/realsense">realsense</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/crigroup/handeye">Hand-eye Calibration</a></li>
+<li><a class="reference external" href="https://github.com/sharronliu/gpd/tree/libgpd">Grasp Pose Detection</a><ul>
+<li><a class="reference internal" href="gpd_setup.html"><em>GPD Setup</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="download-and-build-the-application">
+<h2>Download and Build the Application<a class="headerlink" href="#download-and-build-the-application" title="Permalink to this headline">¶</a></h2>
+<p>Within your catkin workspace, download and compile the example code</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> &lt;path_of_your_catkin_workspace&gt;/src
+
+git clone https://github.intel.com/otc-rse/moveit_app_zoo.git <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ..
+
+catkin config --extend /opt/ros/<span class="si">${</span><span class="nv">ROS_DISTRO</span><span class="si">}</span> --cmake-args -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DUSE_OPENVINO<span class="o">=</span>ON -DBUILD_RANDOM_PICK<span class="o">=</span>ON
+
+catkin build
+</pre></div>
+</div>
+<ul class="simple">
+<li>Build Options<ul>
+<li>USE_OPENVINO (ON | <strong>OFF</strong> ) Switch on/off openvino grasp detection</li>
+<li>BUILD_RANDOM_PICK (ON | <strong>OFF</strong> )
+Switch on/off building of this application</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="launch-the-application-with-fake-control-and-recorded-pointcloud">
+<h2>Launch the Application with Fake Control and Recorded PointCloud<a class="headerlink" href="#launch-the-application-with-fake-control-and-recorded-pointcloud" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Launch a UR5 fake controller, following instruction <a class="reference internal" href="launch_robots.html"><em>Bring up fake controller, real controller and gripper controller</em></a></p>
+<p>To view visual outputs, load rviz configure specific for this application from
+<cite>moveit_example_app/examples/random_pick/random_pick/rviz/grasp.rviz</cite>.</p>
+</li>
+<li><p class="first">Play recorded PointCloud from <code class="docutils literal"><span class="pre">data/random_pick.pcb</span></code>:</p>
+</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre>roslaunch random_pick camera.launch sim:<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Launch the application</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre>rosrun --prefix <span class="s1">&#39;gdb -ex run --args&#39;</span> random_pick random_pick
+</pre></div>
+</div>
+<ul class="simple">
+<li>Launch the OpenVINO grasp detection</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre>roslaunch random_pick gpd.launch device:<span class="o">=</span><span class="m">0</span> plane_remove:<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/random_pick_rviz.png"><img alt="../../_images/random_pick_rviz.png" src="../../_images/random_pick_rviz.png" style="width: 700px; height: 386px;" /></a>
+</div>
+<div class="section" id="launch-the-application-with-real-robot-and-camera">
+<h2>Launch the Application with Real Robot and Camera<a class="headerlink" href="#launch-the-application-with-real-robot-and-camera" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Launch a UR5 real controller, following instruction <a class="reference internal" href="launch_robots.html"><em>Bring up fake controller, real controller and gripper controller</em></a></p>
+<p>To view visual outputs, load rviz configure specific for this application from
+<cite>moveit_example_app/examples/random_pick/random_pick/rviz/grasp.rviz</cite>.</p>
+</li>
+<li><p class="first">Launch the camera and publish hand-eye static TF frame</p>
+</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre>roslaunch random_pick camera.launch
+</pre></div>
+</div>
+<ul class="simple">
+<li>Launch the application</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre>rosrun --prefix <span class="s1">&#39;gdb -ex run --args&#39;</span> random_pick random_pick
+</pre></div>
+</div>
+<ul class="simple">
+<li>Launch the OpenVINO grasp detection</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre>roslaunch random_pick gpd.launch device:<span class="o">=</span><span class="m">0</span> plane_remove:<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">Even though the application runs well on a fake controller,
+some unexpected motion planning or execution results
+would still happen on a real robot. For the sake of safe operation,
+it&#8217;s strongly recommended the operator keeps touching
+the &#8220;emergency stop&#8221; button of the robot and
+being ready to press that button timely in case of necessity.</p>
+</div>
+</div>
+<div class="section" id="customization-notes">
+<h2>Customization Notes<a class="headerlink" href="#customization-notes" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">device [0|1|2|3]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Configure device for grasp pose inference to execute, 0 for CPU, 1 for GPU, 2 for VPU, 3 for FPGA.
+In case OpenVINO plug-ins are installed, this configure deploy the CNN based deep learning inference on
+to the target device. Deploying the inference onto <strong>GPU</strong> or <strong>VPU</strong> will save CPU loads for other computation tasks.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">plane_remove [false|true]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Configure whether or not remove the planes (like the table plane) from point cloud input.
+Enabling this helps to avoid generating grasp poses across the table.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">target_frame_id [&#8220;base&#8221;|&#8221;string&#8221;]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Frame id expected for grasps returned from this service.
+When this parameter is specified, Grasp Planner try to transform the grasp from the original frame
+(usually a camera&#8217;s color frame) to this target frame, given the TF available.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">place_position [[-0.45, -0.30, 0.25]|[1*3 double]]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Place position {x, y, z} in the target_frame_id.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">joint_values_place [[1*6] double]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Place position in joint values. For each place,
+this parameter specifies the target joint values for the arm moving to the place position.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">joint_values_pick [[1*6] double]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Pick position in joint values. For each pick,
+this parameter specifies the target joint values for the arm moving to the pre-pick position.
+This position is usually above the work table.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">finger_joint_names [[1*2] string]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Joint names of gripper fingers. Joint names are filled into MoveIt&#8217;s grasp interface,
+to control the posture of hand for the position of &#8216;pre_grasp_posture&#8217; and &#8216;grasp_posture&#8217;
+(see <a class="reference external" href="http://docs.ros.org/api/moveit_msgs/html/msg/Grasp.html">moveit_msgs::msg::Grasp</a>).
+Joint names are usually defined in URDF of the robot hand.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">finger_positions_open [[1*2] double]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Positions of all finger joints when the hand is in open status.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">finger_positions_close [[1*2] double]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Positions of all finger joints when the hand is in close status.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">eef_yaw_offset [PI/4|double]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">The end-effector&#8217;s yaw offset to its parent link.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">boundry [[1*6] double]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Workspace boundy, described as a cube {x_min, x_max, y_min, y_max, z_min, z_max}
+in metres in the target_frame_id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">object_height_min [0.028|double]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Minimum height in metres (altitude above the work table) of object to grasp.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">kThresholdScore [20|float]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Minimum score of grasp.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">grasp_approach [[0, 0, -1]|[1*3] double]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Expected grasp approach direction.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">approach_deviation [PI/9|double]:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Maximum deviation angle to the expected approach direction.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">grasp_position_offset [[1*2] double]:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Grasp position offset introduced by the system (e.g. camera, hand-eye calibration, etc.)
+{x_offset, y_offset} in metres in the target_frame_id.</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><a class="reference internal" href="platform_fence_customization.html"><em>How to Change the Size of the Platform and Fences</em></a></li>
+</ul>
+</div>
+<div class="section" id="troubles-shooting">
+<h2>Troubles Shooting<a class="headerlink" href="#troubles-shooting" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>MoveIt pick() motion planning failed with IK. This&#8217;s a known issue also observed in the
+<a class="reference external" href="https://github.com/ros-planning/moveit_tutorials/tree/melodic-devel/doc/pick_place">pick_place app</a> of MoveIt Tutorial.
+We reported the issue as <a class="reference external" href="https://github.com/ros-planning/moveit/issues/1278">#1278</a> and provided a workaround.
+Try rebuild moveit_core with this workaround.</li>
+<li>&#8220;moveit_kinematics&#8221; build failure with &#8220;ur3_kin&#8221; and &#8220;ur_kinematics&#8221;. This could be introduced by previously built artefacts.
+Try remove the folder &#8220;build/devel/share/ur_kinematics&#8221;, &#8220;devel/share/ur_kinematics&#8221;, then rebuild &#8220;moveit_kinematics&#8221;.</li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gpd_setup.html" class="btn btn-neutral float-right" title="GPD Setup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../template.html" class="btn btn-neutral" title="[App Tutorial Template]" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MoveIt.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
