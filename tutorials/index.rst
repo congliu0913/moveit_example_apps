@@ -1,5 +1,5 @@
 Welcome to Moveit Example Apps Tutorial
-======================================
+========================================
 
 MoveIt Example Apps delivers advanced applications developed on `MoveIt <https://moveit.ros.org/>`_ for industrial robot.
 These applications demonstrate typical usage scenarios of MoveIt and its extensible capabilities.
