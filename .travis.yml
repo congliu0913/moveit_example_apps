@@ -16,7 +16,7 @@ env:
     - UPSTREAM_WORKSPACE=moveit_example_apps.rosinstall
   matrix:
     - DOCKER_IMAGE=moveit/moveit:master-source   TEST=clang-format,catkin_lint
-    - DOCKER_IMAGE=moveit/moveit:master-source
+    - DOCKER_IMAGE=moveit/moveit:master-source   BEFORE_SCRIPT="source ./moveit_example_apps/random_pick_depends.sh" 
 
 before_install: 
   - sudo -E sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list'
