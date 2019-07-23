@@ -18,7 +18,7 @@ env:
     - ROS_REPO=ros
     - MOVEIT_CI_TRAVIS_TIMEOUT=85  # Travis grants us 90 min, but we add a safety margin of 5 min
     - DOCKER_IMAGE=congliu0913/moveit_example_apps:openvino_librealsense_moveit_root
-    - BEFORE_SCRIPT="source moveit_example_app/berfor_script.sh"
+    - BEFORE_SCRIPT="source moveit_example_app/.berfor_script.sh"
     - TEST_BLACKLIST="moveit_ros_perception"
     - UPSTREAM_WORKSPACE=moveit_example_apps.rosinstall
   matrix:
