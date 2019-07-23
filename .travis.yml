@@ -4,7 +4,6 @@ dist: xenial
 services:
   - docker
 language: cpp
-cache: ccache
 compiler: gcc
 
 notifications:
